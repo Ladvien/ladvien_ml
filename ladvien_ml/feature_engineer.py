@@ -6,6 +6,7 @@ Created on Mon Nov 11 07:12:51 2019
 @author: ladvien
 """
 import pandas as pd
+from pandas.api.types import is_datetime64_any_dtype as is_datetime
 
 class FeatureEngineer:
     
@@ -66,6 +67,25 @@ class FeatureEngineer:
         
         for feature_name in feature_names:
             self.fragment_date(df, feature_name, drop_parent)
+
+    def days_between(self, df, feature_name_one, feature_name_two):
+        """
+            df: DataFrame, the dataframe containing the dates to calculate days between.
+            feature_name_one: str, the name of the primary feature column.
+            feature_name_two: str, the name of the secondary feature column.
+            
+            Procedure:
+                1. Ensure both features are pd.datetime
+                2. Subtract secondary date from primary and cast to datetime.days
+                3. Add this as a column to dateframe as, 'days_between_primary_and_secondary.'
+        """
+        if is_datetime(df[feature_name_one]) and is_datetime(df[feature_name_two]):
+            df[f'days_between_{feature_name_one}_and_{feature_name_two}'] = \
+                (df[feature_name_one] - df[feature_name_two]).dt.days
+        else:
+            print(f'Excepted datetime features, received 1: {df[feature_name_two].dtype} 2:{df[feature_name_two].dtype}')
+            return
+
             
             
             
