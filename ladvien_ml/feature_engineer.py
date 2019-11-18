@@ -68,7 +68,7 @@ class FeatureEngineer:
         for feature_name in feature_names:
             self.fragment_date(df, feature_name, drop_parent)
 
-    def days_between(self, df, feature_name_one, feature_name_two):
+    def create_days_between_feature(self, df, feature_name_one, feature_name_two):
         """
             df: DataFrame, the dataframe containing the dates to calculate days between.
             feature_name_one: str, the name of the primary feature column.
