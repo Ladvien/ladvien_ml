@@ -76,12 +76,12 @@ class FeatureEngineer:
             
             Procedure:
                 1. Ensure both features are pd.datetime
-                2. Subtract secondary date from primary and cast to datetime.days
+                2. Take the absolute values from the difference of the secondary date from primary and cast to datetime.days
                 3. Add this as a column to dateframe as, 'days_between_primary_and_secondary.'
         """
         if is_datetime(df[feature_name_one]) and is_datetime(df[feature_name_two]):
             df[f'days_between_{feature_name_one}_and_{feature_name_two}'] = \
-                (df[feature_name_one] - df[feature_name_two]).dt.days
+                abs((df[feature_name_one] - df[feature_name_two]).dt.days)
         else:
             print(f'Excepted datetime features, received 1: {df[feature_name_two].dtype} 2:{df[feature_name_two].dtype}')
             return
