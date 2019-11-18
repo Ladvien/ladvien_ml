@@ -47,8 +47,8 @@ class FeaturePrep:
         """
         # Problem dates to address:
         # "0000-00-00" -- invalid dates
-        # "5600-02-03" -- bizzare future dates
-        # "1000-02-14" -- bizarre past dates
+        # "5600-02-03" -- bizare future dates
+        # "1000-02-14" -- bizare past dates
         # "NaT"        -- Null, None, NaT
         
         date_length = int(df[feature_name].astype(str).str.len().mean())
