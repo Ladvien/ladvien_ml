@@ -194,13 +194,15 @@ class FeatureModel:
     
     def load_train_data(self, path, dep_var, cols_to_drop = [], cols_to_keep = [], 
                         del_columns_containing = [], preserve_columns = [], 
-                        samples = -1, split_rate = 0.2):
+                        samples = -1, split_rate = 0.2, encoding = 'ASCII'):
+        
+        print(path)
         
         import numpy as np
         from sklearn.model_selection import train_test_split
     
         # Load data using numpy to keep memory low.
-        df = np.load(path, allow_pickle=True)
+        df = np.load(path, allow_pickle = True, encoding = encoding)
         
         # Do we need to sample the data?
         if samples > 0:
