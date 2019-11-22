@@ -142,9 +142,14 @@ class FeatureModel:
         else:
             model.add(Dense(last_layer_output))
         
-    
+        metrics = ''
+        if loss == 'sparse_categorical_crossentropy':
+            metrics = ['sparse_categorical_crossentropy', 'sparse_categorical_accuracy']
+        else:
+            metrics=[loss, 'accuracy']
+        
         # Compile the layer
-        model.compile(loss=loss, optimizer = optimizer, metrics=[loss, 'accuracy'])
+        model.compile(loss=loss, optimizer = optimizer, metrics = metrics)
         
         return model
     
