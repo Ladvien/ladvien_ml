@@ -76,12 +76,11 @@ class FeatureModel:
         # First Layer is Dense.
         if first_layer['type'] == 'dense':
             if layers[0]['activation'] == 'lrelu':
-                model.add(Dense(int(shape_size*layers[0]['widthModifier']), input_dim=shape_size, init='normal'))
+                model.add(Dense(int(shape_size*layers[0]['widthModifier']), input_dim=shape_size))
                 model.add(LeakyReLU(alpha=0.1))
             else:
                 model.add(Dense(int(shape_size*layers[0]['widthModifier']), 
                            input_dim=shape_size, 
-                           init='normal', 
                            activation=layers[0]['activation']))
        
         elif first_layer['type'] == 'noise':
