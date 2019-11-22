@@ -14,8 +14,8 @@ from tensorflow.keras.layers import Dense, Dropout, LeakyReLU, Flatten, \
                                     AveragePooling1D, MaxPooling1D
 from tensorflow.keras.optimizers import Adam, RMSprop, Adagrad, Adadelta, \
                                         Nadam, SGD
-from sklearn.metrics import confusion_matrix as cm, roc_auc_score, \
-                                                accuracy_score
+import tensorflow.keras.regularizers
+from sklearn.metrics import confusion_matrix as cm, roc_auc_score
 from tensorflow.keras import backend as K
 
 class FeatureModel:
@@ -113,7 +113,7 @@ class FeatureModel:
                 l2 = layer['l2']
                 model.add(Dense(int(shape_size*layer['widthModifier']), 
                                 input_dim=shape_size, init='normal', 
-                                kernel_regularizer=regularizers.l1_l2(l1=l1, l2=l2), 
+                                kernel_regularize = regularizers.l1_l2(l1=l1, l2=l2), 
                                 activation=layer['activation']))
                 
             elif layer['type'] == 'pooling':
@@ -166,7 +166,7 @@ class FeatureModel:
     # ------------------------------------------------------
     # Lazy load optimizer
     # ------------------------------------------------------
-    def select_optimizer(opt_type, learning_rate, clipnorm = 0.5):
+    def select_optimizer(self, opt_type, learning_rate, clipnorm = 0.5):
         if opt_type == 'adam':
             return Adam(lr=learning_rate, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
         elif opt_type == 'rmsprop':
@@ -186,13 +186,13 @@ class FeatureModel:
     # ------------------------------------------------------
     # Setup Data Loading
     # ------------------------------------------------------
-    def move_dependent_var_to_end(df, dv_col_name):
+    def move_dependent_var_to_end(self, df, dv_col_name):
         cols = list(df.columns.values) #Make a list of all of the columns in the df
         cols.pop(cols.index(dv_col_name)) #Remove b from list
         df = df[cols+[dv_col_name]] #Create new dataframe with columns in the order you want
         return df
     
-    def load_train_data(path, dep_var, cols_to_drop = [], cols_to_keep = [], 
+    def load_train_data(self, path, dep_var, cols_to_drop = [], cols_to_keep = [], 
                         del_columns_containing = [], preserve_columns = [], 
                         samples = -1, split_rate = 0.2):
         
@@ -208,7 +208,7 @@ class FeatureModel:
             df.reset_index(inplace = True, drop = True)
         
         # Let's move the dep_var to the end to split off.
-        df = move_dependent_var_to_end(df, dep_var)
+        df = self.move_dependent_var_to_end(df, dep_var)
         y = df.iloc[:,-1].values
         df.drop(dep_var, axis = 1, inplace = True)
         
@@ -218,10 +218,10 @@ class FeatureModel:
         df = None
         
         # Package X_train
-        X_train, X_train_preserved_cols = preserve_delete_cols(X_train, preserve_columns, cols_to_drop, del_columns_containing, cols_to_keep)
+        X_train, X_train_preserved_cols = self.preserve_delete_cols(X_train, preserve_columns, cols_to_drop, del_columns_containing, cols_to_keep)
     
         # Package X_test
-        X_test, X_test_preserved_cols = preserve_delete_cols(X_test, preserve_columns, cols_to_drop, del_columns_containing, cols_to_keep)
+        X_test, X_test_preserved_cols = self.preserve_delete_cols(X_test, preserve_columns, cols_to_drop, del_columns_containing, cols_to_keep)
         
         # Reset indexes.
         X_train.reset_index(inplace = True, drop = True) 
@@ -231,7 +231,7 @@ class FeatureModel:
     
         return X_train, X_train_preserved_cols, X_test, X_test_preserved_cols, y_train, y_test
     
-    def preserve_delete_cols(df, preserve_columns, cols_to_drop, del_columns_containing, cols_to_keep):
+    def preserve_delete_cols(self, df, preserve_columns, cols_to_drop, del_columns_containing, cols_to_keep):
         preserved_cols = pd.DataFrame()
         # If there are ids we want for post-portem, preserve them
         if len(preserve_columns) > 0:
@@ -260,11 +260,11 @@ class FeatureModel:
         return df, preserved_cols
         
     
-    def feature_selection(data_path, cols_to_drop, preserve_cols, dep_var):
+    def feature_selection(self, data_path, cols_to_drop, preserve_cols, dep_var):
         # ------------------------------------------------------
         # Load Data
         # ------------------------------------------------------
-        X, y, preserved_cols = load_train_data(data_path, dep_var, cols_to_drop, preserve_columns = preserve_cols, samples = 50000 )
+        X, y, preserved_cols = self.load_train_data(data_path, dep_var, cols_to_drop, preserve_columns = preserve_cols, samples = 50000 )
         
         # ------------------------------------------------------
         # Feature Selection Method #1 -- Backward Elimmination
@@ -291,7 +291,7 @@ class FeatureModel:
         # Clear out the old data.
         print('Loading only selected features')
         X, y, preserved_cols = (None, None, None)
-        return load_train_data(data_path, dep_var, cols_to_drop, cols_to_keep = cols, preserve_columns = preserve_cols )
+        return self.load_train_data(data_path, dep_var, cols_to_drop, cols_to_keep = cols, preserve_columns = preserve_cols )
     
     
     # Freedman Diaconis Estimator
@@ -309,7 +309,7 @@ class FeatureModel:
     # This code was borrowed from ArjanGroen
     # https://www.kaggle.com/arjanso/reducing-dataframe-memory-size-by-65
     
-    def reduce_mem_usage(props):
+    def reduce_mem_usage(self, props):
         start_mem_usg = props.memory_usage().sum() / 1024**2 
         print("Memory usage of properties dataframe is :",start_mem_usg," MB")
         NAlist = [] # Keeps track of columns that have missing values filled in. 
