@@ -111,7 +111,7 @@ class FeatureModel:
                 l1 = layer['l1']
                 l2 = layer['l2']
                 model.add(Dense(int(shape_size*layer['widthModifier']), 
-                                input_dim=shape_size, init='normal', 
+                                input_dim=shape_size, 
                                 kernel_regularize = regularizers.l1_l2(l1=l1, l2=l2), 
                                 activation=layer['activation']))
                 
@@ -128,7 +128,7 @@ class FeatureModel:
                                 
             elif layer['type'] == 'dense':
                 model.add(Dense(int(shape_size*layer['widthModifier']), 
-                input_dim=shape_size, init='normal', 
+                input_dim=shape_size, 
                 activation=layer['activation']))     
     
             
