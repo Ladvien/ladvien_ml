@@ -9,12 +9,13 @@ import pandas as pd
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.models import Sequential, load_model
-from tensorflow.keras.layers import Dense, Dropout, LeakyReLU, Flatten, 
-                                    BatchNormalization, GaussianDropout,
+from tensorflow.keras.layers import Dense, Dropout, LeakyReLU, Flatten, \
+                                    BatchNormalization, GaussianDropout, \
                                     AveragePooling1D, MaxPooling1D
-from tensorflow.keras.optimizers import Adam, RMSprop, Adagrad, Adadelta, 
+from tensorflow.keras.optimizers import Adam, RMSprop, Adagrad, Adadelta, \
                                         Nadam, SGD
-from sklearn.metrics import confusion_matrix as cm, roc_auc_score, accuracy_score
+from sklearn.metrics import confusion_matrix as cm, roc_auc_score, \
+                                                accuracy_score
 from tensorflow.keras import backend as K
 
 class FeatureModel:
