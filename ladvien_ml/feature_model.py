@@ -204,11 +204,11 @@ class FeatureModel:
         
         import numpy as np
         from sklearn.model_selection import train_test_split
-        
-        feature_names = df.columns.tolist()
     
         # Load data using numpy to keep memory low.
         df = np.load(path, allow_pickle = True, encoding = encoding)
+
+        feature_names = df.columns.tolist()
         
         # Do we need to sample the data?
         if samples > 0:
