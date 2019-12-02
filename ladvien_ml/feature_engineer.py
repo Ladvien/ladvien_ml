@@ -5,6 +5,7 @@ Created on Mon Nov 11 07:12:51 2019
 
 @author: ladvien
 """
+import numpy as np
 import pandas as pd
 from pandas.api.types import is_datetime64_any_dtype as is_datetime
 
@@ -87,6 +88,16 @@ class FeatureEngineer:
             return
 
             
-            
-            
+    def get_target_correlations(df, target_name):
         
+        correlations_df = pd.DataFrame()
+        for feature in df.columns.tolist():
+            if feature == target_name:
+                continue
+            
+            corr_value = df[[feature, target_name]].corr()[feature][target_name]
+            if not np.isnan(corr_value):
+                correlations_df = correlations_df.append({'feature_name': feature,
+                                                      target_name: corr_value}, ignore_index = True, sort = False)
+                
+        return correlations_df
