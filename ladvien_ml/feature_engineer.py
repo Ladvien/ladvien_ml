@@ -98,6 +98,6 @@ class FeatureEngineer:
             corr_value = df[[feature, target_name]].corr()[feature][target_name]
             if not np.isnan(corr_value):
                 correlations_df = correlations_df.append({'feature_name': feature,
-                                                      target_name: corr_value}, ignore_index = True, sort = False)
+                                                          'relation_with_' + target_name: corr_value}, ignore_index = True, sort = False)
                 
         return correlations_df
