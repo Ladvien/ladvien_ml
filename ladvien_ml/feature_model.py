@@ -235,7 +235,13 @@ class FeatureModel:
         X_test.reset_index(inplace = True, drop = True)
         X_test_preserved_cols.reset_index(inplace = True, drop = True)
     
-        return X_train, X_train_preserved_cols, X_test, X_test_preserved_cols, y_train, y_test
+        return {'X_train': X_train, 
+                'X_train_preserved_cols': X_train_preserved_cols, 
+                'X_test': X_test, 
+                'X_test_preserved_cols': 'X_test_preserved_cols', 
+                'y_train': y_train, 
+                'y_test': y_test
+        }
     
     def preserve_delete_cols(self, df, preserve_columns, cols_to_drop, del_columns_containing, cols_to_keep):
         preserved_cols = pd.DataFrame()
