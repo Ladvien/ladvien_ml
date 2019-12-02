@@ -28,11 +28,11 @@ class FeatureModel:
         print(f'Error: {round(error / total, 4) * 100}%')
         print(f'Accuracy: {round(correct / total, 4) * 100}%')
     
-    def test_regression_model(self, model, X_test, y_test, output_path = '', id = ''):
+    def test_regression_model(self, model, x_test, y_test, output_path = '', id = ''):
         # ------------------------------------------------------
         # Create a dataframe from prediction and test
         # ------------------------------------------------------
-        y_pred = model.predict(X_test)
+        y_pred = model.predict(x_test)
         y_pred = y_pred[:,0:]
         compare = pd.DataFrame(data = {'y_test': y_test, 'y_pred': y_pred[:,0]})
         compare['abs_dff'] = abs(compare['y_test'] - compare['y_pred'])
@@ -45,8 +45,8 @@ class FeatureModel:
         return compare
     
     
-    def test_classification_model(self, model, X_test, y_test, output_path = '', id = ''):
-        y_hat = y_hat = model.predict_classes(X_test).ravel()
+    def test_classification_model(self, model, x_test, y_test, output_path = '', id = ''):
+        y_hat = y_hat = model.predict_classes(x_test).ravel()
         y_hat = pd.Series(y_hat)
         
         y_test.reset_index(drop = True, inplace = True)
@@ -219,26 +219,26 @@ class FeatureModel:
         df.drop(dep_var, axis = 1, inplace = True)
         
         # Split the data
-        X_train, X_test, y_train, y_test = train_test_split(df, y, test_size = split_rate, random_state = 123) 
+        x_train, x_test, y_train, y_test = train_test_split(df, y, test_size = split_rate, random_state = 123) 
         # Clean
         df = None
         
-        # Package X_train
-        X_train, X_train_preserved_cols = self.preserve_delete_cols(X_train, preserve_columns, cols_to_drop, del_columns_containing, cols_to_keep)
+        # Package x_train
+        x_train, x_train_preserved_cols = self.preserve_delete_cols(x_train, preserve_columns, cols_to_drop, del_columns_containing, cols_to_keep)
     
-        # Package X_test
-        X_test, X_test_preserved_cols = self.preserve_delete_cols(X_test, preserve_columns, cols_to_drop, del_columns_containing, cols_to_keep)
+        # Package x_test
+        x_test, x_test_preserved_cols = self.preserve_delete_cols(x_test, preserve_columns, cols_to_drop, del_columns_containing, cols_to_keep)
         
         # Reset indexes.
-        X_train.reset_index(inplace = True, drop = True) 
-        X_train_preserved_cols.reset_index(inplace = True, drop = True)
-        X_test.reset_index(inplace = True, drop = True)
-        X_test_preserved_cols.reset_index(inplace = True, drop = True)
+        x_train.reset_index(inplace = True, drop = True) 
+        x_train_preserved_cols.reset_index(inplace = True, drop = True)
+        x_test.reset_index(inplace = True, drop = True)
+        x_test_preserved_cols.reset_index(inplace = True, drop = True)
     
-        return {'X_train': X_train, 
-                'X_train_preserved_cols': X_train_preserved_cols, 
-                'X_test': X_test, 
-                'X_test_preserved_cols': 'X_test_preserved_cols', 
+        return {'x_train': x_train, 
+                'x_train_preserved_cols': x_train_preserved_cols, 
+                'x_test': x_test, 
+                'x_test_preserved_cols': x_test_preserved_cols, 
                 'y_train': y_train, 
                 'y_test': y_test
         }
