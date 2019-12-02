@@ -204,6 +204,8 @@ class FeatureModel:
         
         import numpy as np
         from sklearn.model_selection import train_test_split
+        
+        feature_names = df.columns.tolist()
     
         # Load data using numpy to keep memory low.
         df = np.load(path, allow_pickle = True, encoding = encoding)
@@ -240,7 +242,8 @@ class FeatureModel:
                 'x_test': x_test, 
                 'x_test_preserved_cols': x_test_preserved_cols, 
                 'y_train': y_train, 
-                'y_test': y_test
+                'y_test': y_test,
+                'feature_names': feature_names
         }
     
     def preserve_delete_cols(self, df, preserve_columns, cols_to_drop, del_columns_containing, cols_to_keep):
