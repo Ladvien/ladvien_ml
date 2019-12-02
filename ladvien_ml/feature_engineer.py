@@ -90,14 +90,20 @@ class FeatureEngineer:
             
     def get_target_correlations(self, df, target_name):
         
+        from scipy.stats import spearmanr
+        
         correlations_df = pd.DataFrame()
         for feature in df.columns.tolist():
             if feature == target_name:
                 continue
             
-            corr_value = df[[feature, target_name]].corr()[feature][target_name]
+            corr_value, p = spearmanr(df[feature], df[target_name], nan_policy = 'raise')
+            significance = 0
+            if p < abs(corr_value):
+                significance = 1
             if not np.isnan(corr_value):
                 correlations_df = correlations_df.append({'feature_name': feature,
-                                                          'relation_with_' + target_name: corr_value}, ignore_index = True, sort = False)
-                
+                                                          'relation_with_' + target_name: corr_value,
+                                                          'p_value': p,
+                                                          'significant': significance}, ignore_index = True, sort = False)
         return correlations_df
