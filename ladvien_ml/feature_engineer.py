@@ -88,7 +88,7 @@ class FeatureEngineer:
             return
 
             
-    def get_target_correlations(df, target_name):
+    def get_target_correlations(self, df, target_name):
         
         correlations_df = pd.DataFrame()
         for feature in df.columns.tolist():
