@@ -39,6 +39,7 @@ class FeatureEngineer:
             3. Add columns 'feature_year,' 'feature_month,' and 'feature_day.'
             4. If datetime, add columns 'feature_hour,' 'feature_minute,' and 'feature_day'
         """
+        
         print(f'Fragmenting: {feature_name}')
 
         feature_name_len_min = df[feature_name].astype(str).str.len().min()
@@ -117,7 +118,7 @@ class FeatureEngineer:
             return
 
             
-    def get_target_correlations(self, df, target_name):
+    def get_target_correlations(self, df, target_name, nan_policy = 'omit'):
         """
         Calculates Spearman Coefficient across all fields and a target field.
         
@@ -127,6 +128,10 @@ class FeatureEngineer:
             pandas dataframe containing independent and dependent variables.
         target_name : str
             The name of the column containing the dependent variable.
+        nan_policy : str, default: 'omit'
+            Defines how to handle when input contains nan. ‘propagate’ 
+            returns nan, ‘raise’ throws an error, ‘omit’ performs the 
+            calculations ignoring nan values. Default is ‘propagate’.
         
         Description
         -----------
@@ -142,7 +147,7 @@ class FeatureEngineer:
             if feature == target_name:
                 continue
             
-            corr_value, p = spearmanr(df[feature], df[target_name], nan_policy = 'raise')
+            corr_value, p = spearmanr(df[feature], df[target_name], nan_policy = 'omit')
             significance = 0
             if p < abs(corr_value):
                 significance = 1
