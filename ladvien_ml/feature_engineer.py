@@ -24,10 +24,12 @@ class FeatureEngineer:
         
         Parameters
         ----------
-        df: DataFrame, the dataframe containing the feature to fragment.
-        feature_name: str, the name of the feature column.
-        drop_parent: boolean, defualt: True
-            if `True` the date_feture will be dropped from the dataframe after 
+        df : DataFrame
+            The dataframe containing the feature to fragment.
+        feature_name : str
+            The name of the feature column.
+        drop_parent : boolean, defualt: True
+            If `True` the date_feture will be dropped from the dataframe after 
             adding the fragmented columns.
         
         Procedure
@@ -67,10 +69,12 @@ class FeatureEngineer:
         
         Parameters
         ----------
-        df: DataFrame, the dataframe containing the feature to fragment.
-        feature_names: [str], a list containing the names of the feature columns.
-        drop_parent: boolean, defualt: True, 
-            if True the date_feture will be dropped from the dataframe after 
+        df : DataFrame
+            The dataframe containing the feature to fragment.
+        feature_names : [str]
+            A list containing the names of the feature columns.
+        drop_parent : boolean, defualt: True
+            If True the date_feture will be dropped from the dataframe after 
             adding the fragmented columns.
         
         Procedure
@@ -92,9 +96,12 @@ class FeatureEngineer:
         
         Parameters
         ----------
-        df: DataFrame, the dataframe containing the dates to calculate days between.
-        feature_name_one: str, the name of the primary feature column.
-        feature_name_two: str, the name of the secondary feature column.
+        df : DataFrame
+            The dataframe containing the dates to calculate days between.
+        feature_name_one : str
+            The name of the primary feature column.
+        feature_name_two : str
+            The name of the secondary feature column.
         
         Procedure
         ---------
