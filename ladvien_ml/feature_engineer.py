@@ -18,19 +18,24 @@ class FeatureEngineer:
         pass
     
     def fragment_date(self, df, feature_name, drop_parent = True):
-        """
-            df: DataFrame, the dataframe containing the feature to fragment.
-            feature_name: str, the name of the feature column.
-            drop_parent: boolean, defualt: True, if True the date_feture will be dropped from
-                         the dataframe after adding the fragmented columns.
-            
-            Procedure:
-                1. Get average length of date as string
-                2. Force feature to datime
-                3. Add columns 'feature_year,' 'feature_month,' and 'feature_day.'
-                4. If datetime, add columns 'feature_hour,' 'feature_minute,' and 'feature_day'
-        """
+        """        
+        Converts a pandas.DataFrame datetime field into interval counter parts (
+        e.g., 2018-10 becomes two fields, 2018 and 10).
         
+        Parameters
+        ----------
+        df: DataFrame, the dataframe containing the feature to fragment.
+        feature_names: [str], a list containing the names of the feature columns.
+        drop_parent: boolean, defualt: True, if True the date_feture will be dropped from
+                     the dataframe after adding the fragmented columns.
+        
+        Procedure
+        ---------
+        1. Get average length of date as string
+        2. Force feature to datime
+        3. Add columns 'feature_year,' 'feature_month,' and 'feature_day.'
+        4. If datetime, add columns 'feature_hour,' 'feature_minute,' and 'feature_day'
+        """
         print(f'Fragmenting: {feature_name}')
 
         feature_name_len_min = df[feature_name].astype(str).str.len().min()
@@ -55,18 +60,24 @@ class FeatureEngineer:
 
     
     def fragment_dates(self, df, feature_names, drop_parent = True):
-        """
-            df: DataFrame, the dataframe containing the feature to fragment.
-            feature_names: [str], a list containing the names of the feature columns.
-            drop_parent: boolean, defualt: True, if True the date_feture will be dropped from
-                         the dataframe after adding the fragmented columns.
-            
-            Procedure:
-                Loops through the feature_names array and does the following
-                1. Get average length of date as string
-                2. Force feature to datime
-                3. Add columns 'feature_year,' 'feature_month,' and 'feature_day.'
-                4. If datetime, add columns 'feature_hour,' 'feature_minute,' and 'feature_day'
+        """        
+        Converts pandas.DataFrame datetime fields into interval counter parts (
+        e.g., 2018-10 becomes two fields, 2018 and 10).
+        
+        Parameters
+        ----------
+        df: DataFrame, the dataframe containing the feature to fragment.
+        feature_names: [str], a list containing the names of the feature columns.
+        drop_parent: boolean, defualt: True, if True the date_feture will be dropped from
+                     the dataframe after adding the fragmented columns.
+        
+        Procedure
+        ---------
+        Loops through the feature_names array and does the following
+        1. Get average length of date as string
+        2. Force feature to datime
+        3. Add columns 'feature_year,' 'feature_month,' and 'feature_day.'
+        4. If datetime, add columns 'feature_hour,' 'feature_minute,' and 'feature_day'
         """
         
         for feature_name in feature_names:
@@ -74,14 +85,20 @@ class FeatureEngineer:
 
     def create_days_between_feature(self, df, feature_name_one, feature_name_two):
         """
-            df: DataFrame, the dataframe containing the dates to calculate days between.
-            feature_name_one: str, the name of the primary feature column.
-            feature_name_two: str, the name of the secondary feature column.
-            
-            Procedure:
-                1. Ensure both features are pd.datetime
-                2. Take the absolute values from the difference of the secondary date from primary and cast to datetime.days
-                3. Add this as a column to dateframe as, 'days_between_primary_and_secondary.'
+        Takes two pandas.DataFrame datetime columns and calculates the absolute
+        days between the dates.
+        
+        Parameters
+        ----------
+        df: DataFrame, the dataframe containing the dates to calculate days between.
+        feature_name_one: str, the name of the primary feature column.
+        feature_name_two: str, the name of the secondary feature column.
+        
+        Procedure
+        ---------
+        1. Ensure both features are pd.datetime
+        2. Take the absolute values from the difference of the secondary date from primary and cast to datetime.days
+        3. Add this as a column to dateframe as, 'days_between_primary_and_secondary.'
         """
         if is_datetime(df[feature_name_one]) and is_datetime(df[feature_name_two]):
             df[f'days_between_{feature_name_one}_and_{feature_name_two}'] = \
@@ -93,7 +110,6 @@ class FeatureEngineer:
             
     def get_target_correlations(self, df, target_name):
         """
-        
         Calculates Spearman Coefficient across all fields and a target field.
         
         Parameters
@@ -106,9 +122,9 @@ class FeatureEngineer:
         -----------
         A Spearman correlation coefficient is calculated for all columns in
         the dataframe. A dataframe is returned containing:
-            1. The coefficient (rho)
-            2. P-value
-            3. Determination of significance (rho > p)
+        1. The coefficient (rho)
+        2. P-value
+        3. Determination of significance (rho > p)
         """
         
         correlations_df = pd.DataFrame()
