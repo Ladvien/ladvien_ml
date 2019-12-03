@@ -25,16 +25,17 @@ class FeatureEngineer:
         Parameters
         ----------
         df: DataFrame, the dataframe containing the feature to fragment.
-        feature_names: [str], a list containing the names of the feature columns.
-        drop_parent: boolean, defualt: True, if True the date_feture will be dropped from
-                     the dataframe after adding the fragmented columns.
+        feature_name: str, the name of the feature column.
+        drop_parent: boolean, defualt: True
+            if `True` the date_feture will be dropped from the dataframe after 
+            adding the fragmented columns.
         
         Procedure
         ---------
-        1. Get average length of date as string
-        2. Force feature to datime
-        3. Add columns 'feature_year,' 'feature_month,' and 'feature_day.'
-        4. If datetime, add columns 'feature_hour,' 'feature_minute,' and 'feature_day'
+            1. Get average length of date as string
+            2. Force feature to datime
+            3. Add columns 'feature_year,' 'feature_month,' and 'feature_day.'
+            4. If datetime, add columns 'feature_hour,' 'feature_minute,' and 'feature_day'
         """
         print(f'Fragmenting: {feature_name}')
 
@@ -68,16 +69,17 @@ class FeatureEngineer:
         ----------
         df: DataFrame, the dataframe containing the feature to fragment.
         feature_names: [str], a list containing the names of the feature columns.
-        drop_parent: boolean, defualt: True, if True the date_feture will be dropped from
-                     the dataframe after adding the fragmented columns.
+        drop_parent: boolean, defualt: True, 
+            if True the date_feture will be dropped from the dataframe after 
+            adding the fragmented columns.
         
         Procedure
         ---------
         Loops through the feature_names array and does the following
-        1. Get average length of date as string
-        2. Force feature to datime
-        3. Add columns 'feature_year,' 'feature_month,' and 'feature_day.'
-        4. If datetime, add columns 'feature_hour,' 'feature_minute,' and 'feature_day'
+            1. Get average length of date as string
+            2. Force feature to datime
+            3. Add columns 'feature_year,' 'feature_month,' and 'feature_day.'
+            4. If datetime, add columns 'feature_hour,' 'feature_minute,' and 'feature_day'
         """
         
         for feature_name in feature_names:
@@ -96,9 +98,9 @@ class FeatureEngineer:
         
         Procedure
         ---------
-        1. Ensure both features are pd.datetime
-        2. Take the absolute values from the difference of the secondary date from primary and cast to datetime.days
-        3. Add this as a column to dateframe as, 'days_between_primary_and_secondary.'
+            1. Ensure both features are pd.datetime
+            2. Take the absolute values from the difference of the secondary date from primary and cast to datetime.days
+            3. Add this as a column to dateframe as, 'days_between_primary_and_secondary.'
         """
         if is_datetime(df[feature_name_one]) and is_datetime(df[feature_name_two]):
             df[f'days_between_{feature_name_one}_and_{feature_name_two}'] = \
