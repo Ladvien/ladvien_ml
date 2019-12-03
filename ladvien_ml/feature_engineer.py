@@ -123,9 +123,9 @@ class FeatureEngineer:
         -----------
         A Spearman correlation coefficient is calculated for all columns in
         the dataframe. A dataframe is returned containing:
-        1. The coefficient (rho)
-        2. P-value
-        3. Determination of significance (rho > p)
+            1. The coefficient (rho)
+            2. P-value
+            3. Determination of significance (rho > p)
         """
         
         correlations_df = pd.DataFrame()
