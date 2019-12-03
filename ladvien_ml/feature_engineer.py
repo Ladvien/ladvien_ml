@@ -142,6 +142,8 @@ class FeatureEngineer:
             3. Determination of significance (rho > p)
         """
         
+        relationship_name = 'relation_with_' + target_name
+        
         correlations_df = pd.DataFrame()
         for feature in df.columns.tolist():
             if feature == target_name:
@@ -153,7 +155,8 @@ class FeatureEngineer:
                 significance = 1
             if not np.isnan(corr_value):
                 correlations_df = correlations_df.append({'feature_name': feature,
-                                                          'relation_with_' + target_name: corr_value,
+                                                          relationship_name: corr_value,
                                                           'p_value': p,
                                                           'significant': significance}, ignore_index = True, sort = False)
+        correlations_df.sort_values(by = relationship_name, ascending = False, inplace = True)
         return correlations_df
