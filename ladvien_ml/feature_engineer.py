@@ -114,8 +114,7 @@ class FeatureEngineer:
         
         Parameters
         ----------
-        df: DataFrame, the dataframe containing independent variables to 
-            relate to the depedent variable.
+        df: DataFrame, dataframe containing independent and dependent variables.
         target_name: str, the name of the column containing the dependent variable.
         
         Description
