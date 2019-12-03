@@ -147,7 +147,7 @@ class FeatureEngineer:
             if feature == target_name:
                 continue
             
-            corr_value, p = spearmanr(df[feature], df[target_name], nan_policy = 'omit')
+            corr_value, p = spearmanr(df[feature], df[target_name], nan_policy = nan_policy)
             significance = 0
             if p < abs(corr_value):
                 significance = 1
