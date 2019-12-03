@@ -93,15 +93,22 @@ class FeatureEngineer:
             
     def get_target_correlations(self, df, target_name):
         """
-            df: DataFrame, the dataframe containing independent variables to 
-                relate to the depedent variable.
-            target_name: str, the name of the column containing the dependent variable.
-            
-            A Spearman correlation coefficient is calculated for all columns in
-            the dataframe. A dataframe is returned containing:
-                1. The coefficient (rho)
-                2. P-value
-                3. Determination of significance (rho > p)
+        
+        Calculates Spearman Coefficient across all fields and a target field.
+        
+        Parameters
+        ----------
+        df: DataFrame, the dataframe containing independent variables to 
+            relate to the depedent variable.
+        target_name: str, the name of the column containing the dependent variable.
+        
+        Description
+        -----------
+        A Spearman correlation coefficient is calculated for all columns in
+        the dataframe. A dataframe is returned containing:
+            1. The coefficient (rho)
+            2. P-value
+            3. Determination of significance (rho > p)
         """
         
         correlations_df = pd.DataFrame()
