@@ -9,6 +9,9 @@ import numpy as np
 import pandas as pd
 from pandas.api.types import is_datetime64_any_dtype as is_datetime
 
+# Statistics packages
+from scipy.stats import spearmanr
+
 class FeatureEngineer:
     
     def __init__(self):
@@ -89,8 +92,17 @@ class FeatureEngineer:
 
             
     def get_target_correlations(self, df, target_name):
-        
-        from scipy.stats import spearmanr
+        """
+            df: DataFrame, the dataframe containing independent variables to 
+                relate to the depedent variable.
+            target_name: str, the name of the column containing the dependent variable.
+            
+            A Spearman correlation coefficient is calculated for all columns in
+            the dataframe. A dataframe is returned containing:
+                1. The coefficient (rho)
+                2. P-value
+                3. Determination of significance (rho > p)
+        """
         
         correlations_df = pd.DataFrame()
         for feature in df.columns.tolist():
