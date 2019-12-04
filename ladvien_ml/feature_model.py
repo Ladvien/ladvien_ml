@@ -18,6 +18,10 @@ import tensorflow.keras.regularizers
 from sklearn.metrics import confusion_matrix as cm, roc_auc_score
 from tensorflow.keras import backend as K
 
+import numpy as np
+from sklearn.model_selection import train_test_split
+
+
 class FeatureModel:
     
     def confusion_matrix_printed(self, actual_y, y_hat):
@@ -200,11 +204,6 @@ class FeatureModel:
                         del_columns_containing = [], preserve_columns = [], 
                         samples = -1, split_rate = 0.2, encoding = 'ASCII'):
         
-        print(path)
-        
-        import numpy as np
-        from sklearn.model_selection import train_test_split
-    
         # Load data using numpy to keep memory low.
         df = np.load(path, allow_pickle = True, encoding = encoding)
 
