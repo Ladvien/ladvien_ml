@@ -126,10 +126,9 @@ class FeaturePrep:
         
         original_date_series = df[feature_name]
         coerced_data_series = df[feature_name]
-     
+        
         # Coercion causes bad dates to become NaT, which will not match the original.
         coerced_data_series = pd.to_datetime(original_date_series, format = self.DATE_FORMAT, errors = 'coerce')
-        coerced_data_series[coerced_data_series > datetime.now()] = 1
         coerced_data_series[coerced_data_series <= datetime.strptime(f'{look_back}', self.DATE_FORMAT)] = 1
         
         # Need to trim the time compare against date original.
