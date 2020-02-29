@@ -149,8 +149,15 @@ class FeatureEngineer:
             if feature == target_name:
                 continue
             
-            corr_value, p = spearmanr(df[feature], df[target_name], nan_policy = nan_policy)
+            corr_value, p = spearmanr(df[feature], df[target_name], nan_policy = 'omit', axis = 0)
             significance = 0
+            
+            try:
+                if df[feature].shape[1] > 1:
+                    continue
+            except:
+                pass
+            
             if p < abs(corr_value):
                 significance = 1
             if not np.isnan(corr_value):
@@ -159,4 +166,5 @@ class FeatureEngineer:
                                                           'p_value': p,
                                                           'significant': significance}, ignore_index = True, sort = False)
         correlations_df.sort_values(by = relationship_name, ascending = False, inplace = True)
+
         return correlations_df
