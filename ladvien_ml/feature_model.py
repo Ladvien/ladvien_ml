@@ -221,6 +221,7 @@ class FeatureModel:
         
         # Split the data
         x_train, x_test, y_train, y_test = train_test_split(df, y, test_size = split_rate, random_state = 123) 
+        
         # Clean
         df = None
         
