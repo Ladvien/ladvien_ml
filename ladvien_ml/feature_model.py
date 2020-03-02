@@ -221,13 +221,12 @@ class FeatureModel:
         
         # Split the data
         x_train, x_test, y_train, y_test = train_test_split(df, y, test_size = split_rate, random_state = 123) 
-        
         # Clean
         df = None
         
         # Package x_train
         x_train, x_train_preserved_cols = self.preserve_delete_cols(x_train, preserve_columns, cols_to_drop, del_columns_containing, cols_to_keep)
-    
+
         # Package x_test
         x_test, x_test_preserved_cols = self.preserve_delete_cols(x_test, preserve_columns, cols_to_drop, del_columns_containing, cols_to_keep)
         
@@ -260,20 +259,20 @@ class FeatureModel:
         if len(cols_to_drop) > 0:
             for col in cols_to_drop:
                 if col in list(df.columns.values):
-                    df = df[df.drop(col, axis = 1).columns]
+                    df.drop(col, axis = 1)
                 else:
                     print(f'Could not find {col} to drop.')
             
         if len(del_columns_containing) > 0:
             for col in del_columns_containing:
-                df = df[df.columns.drop(list(df.filter(regex=col)), axis = 1)]
+                df.drop(list(df.filter(regex=col)), axis = 1)
                 
         # Keep only wanted columns, if defined.
         if len(cols_to_keep) > 0:
             df = df[cols_to_keep]
         
         return df, preserved_cols
-        
+             
     
     def feature_selection(self, data_path, cols_to_drop, preserve_cols, dep_var):
         # ------------------------------------------------------
