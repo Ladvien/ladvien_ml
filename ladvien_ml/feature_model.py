@@ -259,7 +259,6 @@ class FeatureModel:
         if len(cols_to_drop) > 0:
             for col in cols_to_drop:
                 if col in list(df.columns.values):
-                    print(col)
                     df = df[df.drop(col, axis = 1).columns]
                 else:
                     print(f'Could not find {col} to drop.')
