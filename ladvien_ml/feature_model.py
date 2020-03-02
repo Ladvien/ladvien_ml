@@ -195,10 +195,11 @@ class FeatureModel:
     # Setup Data Loading
     # ------------------------------------------------------
     def move_dependent_var_to_end(self, df, dv_col_name):
-        cols = list(df.columns.values) #Make a list of all of the columns in the df
-        cols.pop(cols.index(dv_col_name)) #Remove b from list
-        df = df[cols+[dv_col_name]] #Create new dataframe with columns in the order you want
-        return df
+        cols = list(df.columns.values)          # Make a list of all of the columns in the df
+        cols.pop(cols.index(dv_col_name))       # Remove b from list
+        columns_in_order = cols+[dv_col_name]
+        print(df[columns_in_order].columns.tolist())
+        return df[columns_in_order]
     
     def load_train_data(self, path, dep_var, cols_to_drop = [], cols_to_keep = [], 
                         del_columns_containing = [], preserve_columns = [], 
@@ -214,16 +215,15 @@ class FeatureModel:
             df = df.sample(samples)
             df.reset_index(inplace = True, drop = True)
         
-        # Let's move the dep_var to the end to split off.
-        df = self.move_dependent_var_to_end(df, dep_var)
-        y = df.iloc[:,-1].values
+        # Let's move the dep_var to the end to split off.r)
+        y = df[dep_var].values
         df.drop(dep_var, axis = 1, inplace = True)
         
         # Split the data
         x_train, x_test, y_train, y_test = train_test_split(df, y, test_size = split_rate, random_state = 123) 
         # Clean
         df = None
-        
+
         # Package x_train
         x_train, x_train_preserved_cols = self.preserve_delete_cols(x_train, preserve_columns, cols_to_drop, del_columns_containing, cols_to_keep)
 
