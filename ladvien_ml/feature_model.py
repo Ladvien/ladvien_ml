@@ -236,9 +236,9 @@ class FeatureModel:
         x_test.reset_index(inplace = True, drop = True)
         x_test_preserved_cols.reset_index(inplace = True, drop = True)
     
-        return {'x_train': np.array(x_train.values), 
+        return {'x_train': x_train.values, 
                 'x_train_preserved_cols': x_train_preserved_cols, 
-                'x_test': np.array(x_test.values), 
+                'x_test': x_test.values, 
                 'x_test_preserved_cols': x_test_preserved_cols, 
                 'y_train': y_train, 
                 'y_test': y_test,
