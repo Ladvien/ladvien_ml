@@ -259,20 +259,19 @@ class FeatureModel:
         if len(cols_to_drop) > 0:
             for col in cols_to_drop:
                 if col in list(df.columns.values):
-                    df.drop(col, axis = 1)
+                    df = df.drop(col, axis = 1)
                 else:
                     print(f'Could not find {col} to drop.')
             
         if len(del_columns_containing) > 0:
             for col in del_columns_containing:
-                df.drop(list(df.filter(regex=col)), axis = 1)
+                df = df.drop(list(df.filter(regex=col)), axis = 1)
                 
         # Keep only wanted columns, if defined.
         if len(cols_to_keep) > 0:
             df = df[cols_to_keep]
         
         return df, preserved_cols
-             
     
     def feature_selection(self, data_path, cols_to_drop, preserve_cols, dep_var):
         # ------------------------------------------------------
