@@ -143,3 +143,41 @@ class FeaturePrep:
 
         return df
 
+    def make_ohe_feature_readable(self, feature_name, print_output = False, separate_value = False):
+        """
+
+            feature_name: str, name of the feature.
+            print_output: Boolean, print the processed feature name.
+            separate_value: Boolean, if true, returns a tuple containing the feature name and the value.
+
+            When one-hot encoding (OHE) values the column names often get garbled.  This method will take a
+            OHE string and return a human readable name.  The string should be of the type
+
+                name_of_feature_value, e.g., 'weight_range_150'
+
+            >>> print(make_ohe_feature_readable(weight_range_150))
+            "Weight Range = 150"
+        """
+        
+        feature_name = feature_name.split('_')
+        value = feature_name[-1]
+        
+        if value == 'nan':
+            value = 'NULL'
+            
+        if '.0' in value:
+            value = value.replace('.0', '')
+        
+        feature_name = feature_name[0:-1]
+        feature_name = ' '.join(feature_name).title()
+    
+        full_output = f'"{feature_name}" = {value}'
+
+        if print_output:
+            print(full_output)
+
+        if separate_value:
+            return (feature_name, value)
+        else:
+            return full_output
+
