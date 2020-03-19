@@ -143,7 +143,7 @@ class FeaturePrep:
 
         return df
 
-    def make_ohe_feature_readable(feature_name, seperator = '.', print_output = False, separate_value = False):
+    def make_ohe_feature_readable(self, feature_name, seperator = '.', print_output = False, separate_value = False):
         """
 
                 feature_name: str, name of the feature.
