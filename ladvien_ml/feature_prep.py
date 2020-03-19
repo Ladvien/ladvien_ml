@@ -169,7 +169,6 @@ class FeaturePrep:
         feature_name = feature_name.replace('_', ' ')
 
         split_feature_name = feature_name.split(seperator)
-        print(split_feature_name)
         value = split_feature_name[1]
 
         # Use SQL like nulls.
