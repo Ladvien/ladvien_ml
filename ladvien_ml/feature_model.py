@@ -204,6 +204,9 @@ class FeatureModel:
     def load_train_data(self, path, dep_var, cols_to_drop = [], cols_to_keep = [], 
                         del_columns_containing = [], preserve_columns = [], 
                         samples = -1, split_rate = 0.2, encoding = 'ASCII'):
+
+        # Remove all items from keep list which are in drop.
+        cols_to_keep = [item_to_keep for item_to_keep in cols_to_keep if item_to_keep not in cols_to_drop]
         
         # Load data using numpy to keep memory low.
         df = np.load(path, allow_pickle = True, encoding = encoding)
