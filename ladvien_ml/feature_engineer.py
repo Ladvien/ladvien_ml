@@ -90,7 +90,7 @@ class FeatureEngineer:
         for feature_name in feature_names:
             self.fragment_date(df, feature_name, drop_parent)
 
-    def create_days_between_feature(self, df, feature_name_one, feature_name_two):
+    def create_days_between_feature(self, df, feature_name_one, feature_name_two, result_name = None):
         """
         Takes two pandas.DataFrame datetime columns and calculates the absolute
         days between the dates.
@@ -103,6 +103,8 @@ class FeatureEngineer:
             The name of the primary feature column.
         feature_name_two : str
             The name of the secondary feature column.
+        result_name: str, optional.  Defaults is None.
+            Sets the name of the resulting column to the one provided.
         
         Procedure
         ---------
@@ -111,11 +113,13 @@ class FeatureEngineer:
             3. Add this as a column to dateframe as, 'days_between_primary_and_secondary.'
         """
         if is_datetime(df[feature_name_one]) and is_datetime(df[feature_name_two]):
-            df[f'days_between_{feature_name_one}_and_{feature_name_two}'] = \
-                abs((df[feature_name_one] - df[feature_name_two]).dt.days)
+            result_col_name = f'days_between_{feature_name_one}_and_{feature_name_two}'
+            if result_name is not None:
+                result_col_name = result_name
+            df[result_col_name] = abs((df[feature_name_one] - df[feature_name_two]).dt.days)
         else:
             print(f'Excepted datetime features, received 1: {df[feature_name_two].dtype} 2:{df[feature_name_two].dtype}')
-            return
+        return
 
             
     def get_target_correlations(self, df, target_name, nan_policy = 'omit'):
