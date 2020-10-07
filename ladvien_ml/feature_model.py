@@ -21,7 +21,6 @@ from tensorflow.keras import backend as K
 import numpy as np
 from sklearn.model_selection import train_test_split
 
-
 class FeatureModel:
     
     def confusion_matrix_printed(self, actual_y, y_hat):
@@ -213,12 +212,6 @@ class FeatureModel:
 
         feature_names = df.columns.tolist()
 
-        # Ensure column exists to keep.
-        for col in cols_to_keep:
-            if col not in feature_names:
-                print(f"Could not keep {col}.  It doesn't exist")
-                cols_to_keep.remove(col)
-
         # Do we need to sample the data?
         if samples > 0:
             df = df.sample(samples)
@@ -262,8 +255,9 @@ class FeatureModel:
             for col in preserve_columns:
                 if not col in df:
                     preserve_columns.remove(col)
-            preserved_cols = df[preserve_columns]
             
+            preserved_cols = df[preserve_columns]
+        
         # Drop unwanted columns.
         if len(cols_to_drop) > 0:
             for col in cols_to_drop:
