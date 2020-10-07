@@ -212,7 +212,13 @@ class FeatureModel:
         df = np.load(path, allow_pickle = True, encoding = encoding)
 
         feature_names = df.columns.tolist()
-        
+
+        # Ensure column exists to keep.
+        for col in cols_to_keep:
+            if col not in feature_names:
+                print(f"Could not keep {col}.  It doesn't exist")
+                cols_to_keep.remove(col)
+
         # Do we need to sample the data?
         if samples > 0:
             df = df.sample(samples)
